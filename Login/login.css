@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url("travel.png");
+    background-size: cover;
+}
+
+.container {
+    position: relative;
+    width: 800px;
+    height: 500px;
+    background: beige;
+    opacity: 0.95;
+    border-radius: 50px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .3);
+    padding: 60px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.container .text-right1, .container .text-right2, .container .text-right3 {
+    position: absolute; color: brown; font-family: "Segoe UI", sans-serif; user-select: none;
+}
+.container .text-right1 { top: 130px; right: 100px; font-size: 50px; }
+.container .text-right2 { top: 180px; right: 190px; font-size: 50px; }
+.container .text-right3 { top: 230px; right: 60px; font-size: 50px; font-style: italic; }
+
+.container .p1, .container .p2 { position: absolute; color: black; font-family: "Segoe UI", sans-serif; font-size: 20px; }
+.container .p1 { top: 320px; right: 80px; }
+.container .p2 { top: 340px; right: 70px; }
+
+.container img {
+    position: absolute; right: -40px; bottom: -160px; width: 60%; transform: rotate(260deg);
+}
+
+.form-wrapper {
+    position: absolute; left: 60px; top: 50%; transform: translateY(-50%); z-index: 2;
+    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out, visibility 0.6s;
+}
+
+.container.active .form-wrapper.login {
+    opacity: 0; visibility: hidden; transform: translate(-400px, -50%);
+}
+
+.container .form-wrapper.register { opacity: 0; visibility: hidden; }
+.container.active .form-wrapper.register { opacity: 1; visibility: visible; }
+
+h2 { font-size: 2em; text-align: center; color: brown; }
+.input-box { position: relative; width: 320px; margin: 30px 0; }
+.input-box input {
+    width: 100%; height: 50px; background: transparent; border: 2px solid black;
+    border-radius: 40px; padding: 0 20px 0 40px; color: brown;
+}
+.input-box .icon { position: absolute; left: 15px; color: brown; line-height: 55px; }
+button { width: 100%; height: 45px; background: brown; border-radius: 40px; color: white; cursor: pointer; border: none; }
+.sign-link { text-align: center; margin: 25px 0; }
+.sign-link a { color: brown; font-weight: 600; text-decoration: none; }
+
+.container .form-wrapper.Details {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-50%) scale(0.9);
+    max-height: 400px; /* Limits height to allow scrolling if needed */
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* Scrollbar styling for the Details form */
+.form-wrapper.Details::-webkit-scrollbar {
+    width: 5px;
+}
+.form-wrapper.Details::-webkit-scrollbar-thumb {
+    background: brown;
+    border-radius: 10px;
+}
+
+/* State: Show Details, Hide Login/Register */
+.container.show-details .form-wrapper.login,
+.container.show-details .form-wrapper.register {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.container.show-details .form-wrapper.Details {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) scale(1);
+}
+
+/* Styling for Details form elements */
+.form-wrapper.Details .form-label {
+    color: brown;
+    font-weight: 600;
+    display: block;
+    margin-top: 10px;
+}
+
+.form-wrapper.Details .form-control {
+    width: 100%;
+    padding: 8px 15px;
+    border: 1px solid brown;
+    border-radius: 20px;
+    background: transparent;
+    margin-bottom: 5px;
+    color: brown;
+}
+
+.form-wrapper.Details .form-check-inline {
+    display: inline-block;
+    margin-right: 15px;
+    color: black;
+    font-size: 14px;
+}
+
+.form-wrapper.Details .col-10 {
+    font-size: 14px;
+    margin-bottom: 5px;
+}

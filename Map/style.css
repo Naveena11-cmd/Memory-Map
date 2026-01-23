@@ -1,0 +1,89 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'DM Sans', sans-serif;
+    overflow: hidden;
+}
+
+#map {
+    width: 100%;
+    height: 100vh;
+}
+
+.info-overlay {
+    position: absolute;
+    top: 100px;
+    right: 20px;
+    z-index: 1000;
+    max-width: 320px;
+    pointer-events: none;
+}
+
+.floating-btn {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+    padding: 12px 25px;
+}
+.floating-btn1 {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    z-index: 1000;
+    padding: 12px 25px;
+}
+/* Custom Marker Pin */
+.custom-pin {
+    background: transparent !important;
+    border: none !important;
+}
+
+.size-xs { width: 14px; height: 14px; }
+.size-sm { width: 18px; height: 18px; }
+.size-lg { width: 40px; height: 40px; }
+
+.memory-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #dee2e6;
+}
+
+.memory-media {
+    height: 200px;
+    object-fit: cover;
+    width: 100%;
+}
+.accordion-body ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.accordion-body li {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eee;
+    color: brown; /* Matching your theme */
+    cursor: pointer;
+}
+
+.accordion-body li:last-child {
+    border-bottom: none;
+}
+
+.accordion-body li:hover {
+    background-color: #f8f1e9;
+}
+/* Add to project/Map/style.css */
+.visited-item {
+    background-color: #d4edda !important; /* Light green background */
+    color: #155724 !important;            /* Dark green text */
+    font-weight: bold;
+}
+
+.visited-header {
+    background-color: #c3e6cb !important; /* Slightly darker green for the header */
+    color: #155724 !important;
+}

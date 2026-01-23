@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrameMyTrip - Login & Register</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="text-right1">WELCOME</h2>
+        <h2 class="text-right2">to</h2>
+        <h2 class="text-right3">Memory Map</h2>
+        <h5 class="p1">Your Personal World Map,</h5>
+        <h5 class="p2">Reimagined Through Your Lens!</h5>
+
+        <div class="form-wrapper login">
+            <form id="loginForm">
+                <h2>Login</h2>
+                <div class="input-box">
+                    <span class="icon"><i class="bi bi-envelope-fill"></i></span>
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><i class="bi bi-lock-fill"></i></span>
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                    <span class="toggle-password" onclick="togglePassword('loginPassword', this)">
+                        <i class="bi bi-eye-slash"></i>
+                    </span>
+                </div>
+                <div class="forgot-pass">
+                    <a href="#">Forgot Password?</a>
+                </div>
+                <button type="submit" id="login">Login</button>
+                <div class="sign-link">
+                    <p>Don't have an account? <a href="#" onclick="registerActive()">Register</a></p>
+                </div>
+            </form>
+        </div>
+
+        <div class="form-wrapper register">
+            <form id="registerForm">
+                <h2>Registration</h2>
+                <div class="input-box">
+                    <span class="icon"><i class="bi bi-person-fill"></i></span>
+                    <input type="text" id="regFullName" placeholder="Full Name" required>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><i class="bi bi-envelope-fill"></i></span>
+                    <input type="email" id="regEmail" placeholder="Email" required>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><i class="bi bi-lock-fill"></i></span>
+                    <input type="password" id="regPassword" placeholder="Password" required>
+                    <span class="toggle-password" onclick="togglePassword('regPassword', this)">
+                        <i class="bi bi-eye-slash"></i>
+                    </span>
+                </div>
+                <button type="submit" id="register">Register</button>
+                <div class="sign-link">
+                    <p>Already have an account? <a href="#" onclick="loginActive()">Login</a></p>
+                </div>
+            </form>
+        </div>
+
+        <div class="form-wrapper Details">
+        <form id="detailsForm">
+        <h2>Welcome to Memory Map</h2>
+        <label class="form-label">Age : </label>
+        <input type="number" class="form-control" placeholder="enter your age : ">
+
+        <label class="form-label">Gender : </label>
+                <div  class="form-check form-check-inline">
+                    <input type="checkbox" name="size"class="form-check-input" value="s">
+                    <label class="form-label">Female</label>
+                </div>
+                <div  class="form-check form-check-inline">
+                    <input type="checkbox" name="size"class="form-check-input" value="m">
+                    <label class="form-label">Male</label>
+                </div>
+                <div  class="form-check form-check-inline">
+                    <input type="checkbox" name="size"class="form-check-input" value="m">
+                    <label class="form-label">Others</label>
+                </div>
+        <label class="form-label">Number : </label>
+        <input type="number" class="form-control" min="0000000000" max="9999999999" placeholder="Enter your Phone Number">
+
+        <label class="form-label">State : </label>
+        <input type="text" class="form-control" placeholder="Enter the state you currently live in : ">
+
+        <label class="form-label">City : </label>
+        <input type="text" class="form-control" placeholder="Enter the city you currently live in : ">
+
+        <label class="form-label col-2">What are you upto? </label>
+                <div class="col-10"></div>
+                
+                <div class="col-2"></div>
+                <div class="col-10"><input type="checkbox">I'm currently travelling</div>
+
+                <div class="col-2"></div>
+                <div class="col-10"><input type="checkbox">I'm leaving for a trip soon</div>
+
+                <div class="col-2"></div>
+                <div class="col-10"><input type="checkbox">I am planning for a trip</div>
+
+                <div class="col-2"></div>
+                <div class="col-10"><input type="checkbox">Something else</div>
+
+                <button type="submit" id="details">Submit</button>
+    </form>
+    </div>
+
+    </div>
+    <script type="module" src="login.js"></script>
+</body>
+
+</html>
