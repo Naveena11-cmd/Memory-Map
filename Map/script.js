@@ -16,9 +16,72 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+
+// 1. Initialize the new modal
+const addMemoryModal = new bootstrap.Modal(document.getElementById('addMemoryModal'));
+
+document.getElementById('navAddMemoryBtn').onclick = () => {
+    
+    document.getElementById('latInput').value = selectedPosition ? selectedPosition.lat.toFixed(6) : "";
+    document.getElementById('lngInput').value = selectedPosition ? selectedPosition.lng.toFixed(6) : "";
+    
+    document.getElementById('newTitle').value = "";
+    document.getElementById('newDescription').value = "";
+    
+    document.getElementById('displayCoords').innerText = selectedPosition 
+        ? `${selectedPosition.lat.toFixed(4)}, ${selectedPosition.lng.toFixed(4)}` 
+        : "Enter Coordinates Manually";
+    
+    addMemoryModal.show();
+};
+
+document.getElementById('newMemoryForm').onsubmit = async (e) => {
+    e.preventDefault();
+    
+    const lat = parseFloat(document.getElementById('latInput').value);
+    const lng = parseFloat(document.getElementById('lngInput').value);
+
+    if (isNaN(lat) || isNaN(lng)) {
+        alert("Please enter valid numeric coordinates.");
+        return;
+    }
+
+    try {
+        const geoRes = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
+        const geoData = await geoRes.json();
+
+        const memory = {
+            userId: currentUser.uid,
+            title: document.getElementById('newTitle').value,
+            description: document.getElementById('newDescription').value,
+            lat: lat,
+            lng: lng,
+            state: geoData.address ? (geoData.address.state || "") : "",
+            city: geoData.address ? (geoData.address.city || geoData.address.town || "") : "",
+            createdAt: new Date().toISOString(),
+            photoUrl: await fileToBase64(document.getElementById('newPhotoInput').files[0])
+        };
+
+        await addDoc(collection(db, "memories"), memory);
+        
+        alert("Memory Saved! 📸");
+        
+        loadUserMemories(); 
+        
+        map.flyTo([lat, lng], 14); 
+        
+        addMemoryModal.hide();
+        e.target.reset();
+    } catch (error) {
+        console.error("Save error:", error);
+        alert("Error saving memory. Please check your connection.");
+    }
+};
+
+
 // === State Management ===
 let map;
-let locations = []; // Will store individual memory documents from Firestore
+let locations = [];
 let currentUser = null;
 let selectedPosition = null;
 let activeCircle = null;
@@ -66,7 +129,7 @@ function initMap() {
 }
 
 function setupMap(lat, lng) {
-    if (map) return; // Prevent double initialization
+    if (map) return;
     map = L.map('map').setView([lat, lng], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
@@ -77,7 +140,7 @@ function setupMap(lat, lng) {
     lucide.createIcons();
 }
 
-// === Distance Logic ===
+// === Distance ===
 function getDistance(lat1, lon1, lat2, lon2) {
     const R = 6371; 
     const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -101,7 +164,7 @@ function handleInteraction(lat, lng) {
         dashArray: '5, 10'
     }).addTo(map);
 
-    // Filter memories from the global 'locations' array
+    
     const nearbyMemories = locations.filter(loc => getDistance(lat, lng, loc.lat, loc.lng) <= 5);
 
     document.getElementById('locationCoords').innerText = `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
@@ -111,7 +174,6 @@ function handleInteraction(lat, lng) {
     memoryModal.show();
 }
 
-// === UI Rendering (Accordion & Pins) ===
 function renderAccordion() {
     const accordionContainer = document.getElementById('stateAccordion');
     accordionContainer.innerHTML = '';
@@ -171,7 +233,7 @@ function renderPins() {
     });
 }
 
-// === Firebase & Data Auth ===
+// === Firebase===
 onAuthStateChanged(auth, (user) => {
     if (user) {
         currentUser = user;
@@ -261,7 +323,6 @@ document.getElementById('addMemoryForm').onsubmit = async (e) => {
     }
 };
 
-// === Helpers ===
 function fileToBase64(file) {
     if (!file) return Promise.resolve(null);
     return new Promise((resolve) => {
@@ -269,7 +330,7 @@ function fileToBase64(file) {
         reader.onload = () => resolve(reader.result);
         reader.readAsDataURL(file);
     });
-}
+}   
 
 function resetModalView() {
     document.getElementById('optionsView').classList.remove('d-none');
