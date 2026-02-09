@@ -9,49 +9,64 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 </head>
 <body class="bg-dark text-light">
 
-    <nav class="nav">
+    <nav class="nav" style="background-color: brown;color: white; font-weight: bold;">
         <div class="container-fluid px-4 py-3 d-flex justify-content-between align-items-center">
             <a href="#" class="text-white text-decoration-none d-flex align-items-center gap-2">
                 <i data-lucide="map" class="lucide-lg"></i>
                 <span class="fs-5 fw-bold">Memory Map</span>
             </a>
-            <a href="#" class="text-white text-decoration-none">About</a>
+
+            <div class="d-flex flex-grow-1 justify-content-center align-items-center gap-3 mx-4" style="max-width: 600px;">
+            <form class="d-flex w-100" style="max-width: 400px;">
+                <div class="input-group">
+                    <input class="form-control rounded-start-pill border-0" type="search" placeholder="Search cities or states..." aria-label="Search">
+                    <button class="btn btn-light rounded-end-pill border-0" type="submit">
+                        <i data-lucide="search" class="size-sm"></i>
+                    </button>
+                </div>
+            </form>
+            
+            <button id="navAddMemoryBtn" class="btn btn-light fw-bold px-3 rounded-pill d-flex align-items-center gap-1" style="color: brown; white-space: nowrap;">
+                <i data-lucide="plus" class="size-sm"></i> Add Memory
+            </button>
         </div>
-    </nav>
-    <div id="map"></div>
-    <div class="info-overlay p-3 bg-white rounded shadow-lg text-dark">
-        <div class="d-flex align-items-start gap-2">
-            <i data-lucide="map-pin" class="text-primary mt-1"></i>
-            <div>
-                <h5 class="fw-bold mb-1">Memory Map</h5>
-                <p class="small text-muted mb-0">Click anywhere to explore memories within a <span class="fw-bold text-primary">5km radius</span></p>
+            
+            
+            <div class="d-flex align-items-center gap-4">
+                <a href="about.html" class="text-white text-decoration-none">About</a>
+                <button id="logoutBtn" class="btn btn-sm btn-light fw-bold px-3 rounded-pill">Logout</button>
             </div>
         </div>
-    </div>
+    </nav>
+
+    <div id="map"></div>
     
-    <button id="centerBtn" class="btn btn-primary rounded-pill shadow-lg floating-btn">
+    
+    <button id="centerBtn" class="btn rounded-pill shadow-lg floating-btn" style="background-color: brown;color: white; font-weight: bold;">
         <i data-lucide="navigation" class="me-2"></i>My Location
     </button>
-    <button class="btn btn-primary floating-btn1" type="button" data-bs-toggle="offcanvas"  data-bs-target="#stateOffcanvas">
+    <button class="btn floating-btn1" type="button" data-bs-toggle="offcanvas"  data-bs-target="#stateOffcanvas" style="background-color: brown; color: white; font-weight: bold;">
   Explore States & Cities
 </button>
-    <div class="modal fade" id="memoryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="memoryModal" tabindex="-1" aria-hidden="true" >
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content border-0 overflow-hidden">
-                <div class="modal-header bg-primary text-white border-0 flex-column align-items-start p-4">
+                <div class="modal-header text-white border-0 flex-column align-items-start p-4" style="background-color: brown;color: white; font-weight: bold;">
                     <div class="d-flex w-full justify-content-between align-items-center w-100 mb-2">
                         <button type="button" id="backBtn" class="btn btn-link text-white p-0 d-none">
                             <i data-lucide="arrow-left"></i>
                         </button>
                         <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal"></button>
                     </div>
-                    <div class="d-flex align-items-center gap-3">
+                    <div class="d-flex align-items-center gap-3" >
                         <i data-lucide="map-pin" class="lucide-lg"></i>
                         <div>
-                            <h4 class="modal-title fw-bold" id="modalTitle">Location Details</h4>
+                            <h4 class="modal-title fw-bold" id="modalTitle" >Location Details</h4>
                             <div class="d-flex align-items-center gap-2 small opacity-75">
                                 <span id="locationCoords">0.0000, 0.0000</span>
                                 <span class="badge bg-white bg-opacity-25 rounded-pill">
@@ -82,7 +97,7 @@
                     
                     <form id="addMemoryForm" class="d-none">
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Memory Title *</label>
+                            <label class="form-label fw-bold">Memory Title</label>
                             <input type="text" id="title" class="form-control" placeholder="Give your memory a title..." required>
                         </div>
                         <div class="mb-3">
@@ -110,7 +125,60 @@
         </div>
     </div>
     
-    
+<!-- add memory modal -->
+<div class="modal fade" id="addMemoryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content border-0 overflow-hidden">
+            <div class="modal-header text-white border-0 flex-column align-items-start p-4" style="background-color: brown;">
+                <div class="d-flex w-100 justify-content-between align-items-center mb-2">
+                    <h4 class="modal-title fw-bold">Add New Memory</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="d-flex align-items-center gap-2 small opacity-75">
+                    <i data-lucide="map-pin" class="size-xs"></i>
+                    <span id="displayCoords">0.0000, 0.0000</span>
+                </div>
+            </div>
+            <div class="modal-body p-4 bg-light">
+                <form id="newMemoryForm">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Memory Title</label>
+                        <input type="text" id="newTitle" class="form-control" placeholder="Title..." required>
+                    </div>
+                    
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">N Coordinates (Latitude)</label>
+                            <input type="number" step="any" id="latInput" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">E Coordinates (Longitude)</label>
+                            <input type="number" step="any" id="lngInput" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Description</label>
+                        <textarea id="newDescription" class="form-control" rows="3" placeholder="Share your story..."></textarea>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-6">
+                            <label class="form-label fw-bold">Photo</label>
+                            <input type="file" id="newPhotoInput" class="form-control" accept="image/*">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label fw-bold">Video</label>
+                            <input type="file" id="newVideoInput" class="form-control" accept="video/*">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-dark w-100 py-3 fw-bold">Save Memory</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="offcanvas offcanvas-start" tabindex="-1" id="stateOffcanvas" aria-labelledby="stateOffcanvasLabel">
   <div class="offcanvas-header">
@@ -125,5 +193,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script type="module" src="script.js"></script>
+
+
 </body>
 </html>
