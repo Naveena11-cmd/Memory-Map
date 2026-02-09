@@ -3,21 +3,21 @@ body, html {
     padding: 0;
     height: 100%;
     font-family: 'DM Sans', sans-serif;
-    overflow: hidden;
 }
 
 #map {
     width: 100%;
-    height: 100vh;
+    height:100%; 
+    margin-top: 60px; 
+    z-index: 1;
 }
 
-.info-overlay {
-    position: absolute;
-    top: 100px;
-    right: 20px;
-    z-index: 1000;
-    max-width: 320px;
-    pointer-events: none;
+.nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1050;
+    height: 60px;
 }
 
 .floating-btn {
@@ -34,7 +34,7 @@ body, html {
     z-index: 1000;
     padding: 12px 25px;
 }
-/* Custom Marker Pin */
+
 .custom-pin {
     background: transparent !important;
     border: none !important;
@@ -65,7 +65,7 @@ body, html {
 .accordion-body li {
     padding: 8px 12px;
     border-bottom: 1px solid #eee;
-    color: brown; /* Matching your theme */
+    color: brown; 
     cursor: pointer;
 }
 
@@ -76,14 +76,27 @@ body, html {
 .accordion-body li:hover {
     background-color: #f8f1e9;
 }
-/* Add to project/Map/style.css */
+
 .visited-item {
-    background-color: #d4edda !important; /* Light green background */
-    color: #155724 !important;            /* Dark green text */
+    background-color: #d4edda !important; 
+    color: #155724 !important;
     font-weight: bold;
 }
 
 .visited-header {
-    background-color: #c3e6cb !important; /* Slightly darker green for the header */
+    background-color: #c3e6cb !important; 
     color: #155724 !important;
+}
+
+#addMemoryModal .form-label, 
+#memoryModal .form-label {
+    color: #212529 !important; 
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+
+#addMemoryModal .form-control {
+    border: 1px solid #ced4da !important;
+    color: #000 !important;
 }
